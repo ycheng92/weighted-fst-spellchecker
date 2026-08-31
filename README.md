@@ -28,23 +28,7 @@ suggests likely corrections for a misspelled word, ranked by plausibility.
 
 3. **Weighted finite-state transducer** ([fst.py](fst.py))
 
-   `build_editfst()` (in [spellcheck.py](spellcheck.py)) produces a two-state
-   weighted FST: state `0` is the start state, state `1` is accepting, and
-   every letter pair is a possible transition between them.
-
-   ```mermaid
-   stateDiagram-v2
-       direction LR
-       state "0" as s0
-       state "1" as s1
-       [*] --> s0
-       s0 --> s0 : Σ:Σ (identity)
-       s0 --> s1 : x:y (substitution)
-       s0 --> s1 : x:ε (deletion)
-       s0 --> s1 : ε:y (insertion)
-       s1 --> s1 : Σ:Σ (identity)
-       s1 --> [*]
-   ```
+   ![Two FST diagrams: a toy example from fst.py's __main__ block showing states 0-4 with labeled transitions, and the two-state weighted edit-distance FST used by build_editfst(), with insert, substitute, and delete arcs between state 0 and the accepting state 1](fst-diagram.svg)
 
    The `FST` class supports:
    - `transduce(s)` — yields every possible output string (and its weight)
